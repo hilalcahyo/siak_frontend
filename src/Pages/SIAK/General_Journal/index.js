@@ -26,22 +26,20 @@ class Home extends React.Component {
             localStateSelectedRekeningDebet : '',
             localStateSelectedRekeningCredit : '',
             localStateSelectedKeterangan : '',
-            localStateOptionKeteranganFromBackend: []            
+            localStateOptionKeteranganFromBackend: [],
+            localStateOptionsRekeningDebetFromBackend: []           
         }
         this.handleCatchOptionDebet = this.handleCatchOptionDebet.bind(this)
         this.handleCatchOptionCredit = this.handleCatchOptionCredit.bind(this)
         this.handleCatchOptionKeterangan = this.handleCatchOptionKeterangan.bind(this)
-        //this.getMoviesFromApiAsync = this.getMoviesFromApiAsync.bind(this)
+        this.handleCatchOptionRekeningDebet = this.handleCatchOptionRekeningDebet.bind(this)
     }
-    // getMoviesFromApiAsync() { 
-    //     }
     componentWillMount(){
         console.log('>>> Hallo')
         Request('http://127.0.0.1:9000/details', (error, response, body) => {
             console.log('error:', error); // Print the error if one occurred
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             console.log('body:', body); // Print the HTML for the Google homepage.
-            //console.log('body:', JSbody)
             let tempBody = JSON.parse(body)
             tempBody.error_json
             console.log("tempBody >>", tempBody.result_json)
@@ -51,6 +49,18 @@ class Home extends React.Component {
             console.log(this.state.localStateOptionKeteranganFromBackend)
         });
 
+        Request('http://127.0.0.1:9000/accounts', (error, response, body) => {
+            console.log('error:', error); // Print the error if one occurred
+            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+            console.log('body:', body); // Print the HTML for the Google homepage.
+            let tempBody = JSON.parse(body)
+            tempBody.error_json
+            console.log("tempBody >>", tempBody.result_json)
+            this.setState({
+                localStateOptionsRekeningDebetFromBackend: tempBody.result_json
+            })  
+            console.log(this.state.localStateOptionKeteranganFromBackend)
+        });
     
 
     }
@@ -61,39 +71,24 @@ class Home extends React.Component {
         console.log("handleCatchOptionCredit >>>", value)
     }
     handleCatchOptionKeterangan(value){
-        // console.log("handleCatchOptionKeterangan >>>", value)
-        // console.log("Object-> Label ", value.label) 
-        // console.log("Object-> Value ", value.value) 
         this.setState({
             localStateSelectedKeterangan: value.value
         })      
-        // console.log(this.state.localStateSelectedKeterangan, '<<<<<< selected keterangan')
+    }
+    handleCatchOptionRekeningDebet(value){
+        this.setState({
+            localStateSelectedRekeningDebet: value.value
+        })      
     }
 
-    // handleUpdateInputForm1(event){
-    // let currentInputForm1 = event.target.value
-    // this.props.actionUpdateInputForm1(currentInputForm1)
-    // }
-    // handleUpdateInputForm2(event){
-    // let currentInputForm2 = event.target.value
-    // this.props.actionUpdateInputForm2(currentInputForm2)
-    // }
   render() {
     return (
         <div>
             <h1>Home</h1>
             <br/>
-            {/*
-            <label>Input One</label>
-            <br/>
-              <input type="number" value={this.props.inputForm1} onChange={this.handleUpdateInputForm1}/>
-            <br/>
-            <label>Input Two</label>
-            <br/>            
-              <input type="number" value={this.props.inputForm2} onChange={this.handleUpdateInputForm2}/>
-            <br/>*/
-            }
             <div>
+                <label>Select Keterangan</label>
+                <br/>                
                 <Select
                 name="form-field-name"
                 value={this.state.localStateSelectedKeterangan}
@@ -101,7 +96,16 @@ class Home extends React.Component {
                 onChange={currentValue => this.handleCatchOptionKeterangan(currentValue)}
                 />
             </div>
-       
+            <div>
+                <label>Select Debet</label>
+                <br/>
+                <Select
+                name="form-field-name"
+                value={this.state.localStateSelectedRekeningDebet}
+                options={this.state.localStateOptionsRekeningDebetFromBackend}
+                onChange={currentValue => this.handleCatchOptionRekeningDebet(currentValue)}
+                />
+            </div>
         </div>
     );
   }
