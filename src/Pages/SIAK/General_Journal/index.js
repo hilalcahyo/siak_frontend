@@ -9,7 +9,7 @@ import {
   actionUpdateInputForm1,
   actionUpdateInputForm2
 } from '../../../Redux/Reducers/Pages/Reducer_Home'
-
+import Request from 'request'
 
 
 
@@ -25,11 +25,34 @@ class Home extends React.Component {
                                             { value: '222ba568-9ef1-4db6-96f6-86109a357ea5', label: 'Beli Peralatan(Komputer,Rak, Kursi, Meja, Printer) Tunai'}],
             localStateSelectedRekeningDebet : '',
             localStateSelectedRekeningCredit : '',
-            localStateSelectedKeterangan : '',            
+            localStateSelectedKeterangan : '',
+            localStateOptionKeteranganFromBackend: []            
         }
         this.handleCatchOptionDebet = this.handleCatchOptionDebet.bind(this)
         this.handleCatchOptionCredit = this.handleCatchOptionCredit.bind(this)
         this.handleCatchOptionKeterangan = this.handleCatchOptionKeterangan.bind(this)
+        //this.getMoviesFromApiAsync = this.getMoviesFromApiAsync.bind(this)
+    }
+    // getMoviesFromApiAsync() { 
+    //     }
+    componentWillMount(){
+        console.log('>>> Hallo')
+        Request('http://127.0.0.1:9000/details', (error, response, body) => {
+            console.log('error:', error); // Print the error if one occurred
+            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+            console.log('body:', body); // Print the HTML for the Google homepage.
+            //console.log('body:', JSbody)
+            let tempBody = JSON.parse(body)
+            tempBody.error_json
+            console.log("tempBody >>", tempBody.result_json)
+            this.setState({
+                localStateOptionKeteranganFromBackend: tempBody.result_json
+            })  
+            console.log(this.state.localStateOptionKeteranganFromBackend)
+        });
+
+    
+
     }
     handleCatchOptionDebet(value){
         console.log("handleCatchOptionDebet >>>", value)
@@ -74,11 +97,8 @@ class Home extends React.Component {
                 <Select
                 name="form-field-name"
                 value={this.state.localStateSelectedKeterangan}
-                options={this.state.localStateOptionKeterangan}
+                options={this.state.localStateOptionKeteranganFromBackend}
                 onChange={currentValue => this.handleCatchOptionKeterangan(currentValue)}
-                searchable='true'
-                clearable='true'
-                
                 />
             </div>
        
