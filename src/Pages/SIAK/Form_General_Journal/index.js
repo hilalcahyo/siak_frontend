@@ -25,7 +25,10 @@ class Home extends React.Component {
             localStateKodeJurnalUmum: '',
             
             localStateOptionKeteranganFromBackend: [],
-            localStateOptionsRekeningFromBackend: []           
+            localStateOptionsRekeningFromBackend: [],
+            localStateArrayOne: [{'name':'sapi'}],           
+            localStateArrayTwo: [{'name':'joko'}],
+            localStateArrayThree: []           
         }
         this.handleCatchOptionKeterangan = this.handleCatchOptionKeterangan.bind(this)
         this.handleCatchOptionRekeningDebet = this.handleCatchOptionRekeningDebet.bind(this)
@@ -101,6 +104,13 @@ class Home extends React.Component {
         console.log('Selected Rekening Debet >', this.state.localStateSelectedRekeningDebet)
         console.log('Selected Jumlah Debet >', this.state.localStateJumlahRekeningDebet)
         this.handleHitPOSTFormJurnalUmum()
+        // let tempTotalArray = this.state.localStateArrayOne
+        // Array.prototype.push.apply(tempTotalArray, this.state.localStateArrayTwo)
+        // console.log('TEMP TOTAL ARRAY : ', tempTotalArray)
+        // this.setState({
+        //     localStateArrayThree: (this.state.localStateArrayOne).concat(this.state.localStateArrayTwo)
+        // })
+       
     }
     handleHitPOSTFormJurnalUmum(){
         // console.log('>>>> ', this.localStateJumlahRekeningCredit)
