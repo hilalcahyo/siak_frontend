@@ -22,7 +22,7 @@ class Home extends React.Component {
             
             localStateSelectedKeterangan : '',
 
-            localStateID: '',
+            localStateKodeJurnalUmum: '',
             
             localStateOptionKeteranganFromBackend: [],
             localStateOptionsRekeningFromBackend: []           
@@ -33,6 +33,7 @@ class Home extends React.Component {
         this.handleInputTotalDebet = this.handleInputTotalDebet.bind(this)
         this.handleInputTotalCredit = this.handleInputTotalCredit.bind(this)
         this.handleSubmitButtonFormJournalUmum = this.handleSubmitButtonFormJournalUmum.bind(this)
+        this.handleHitPOSTFormJurnalUmum = this.handleHitPOSTFormJurnalUmum.bind(this)
     }
     componentWillMount(){
         Request('http://127.0.0.1:9000/details', (error, response, body) => {
@@ -91,11 +92,40 @@ class Home extends React.Component {
     }
     handleSubmitButtonFormJournalUmum(){
         console.log(ShortID())
+        this.setState({
+            localStateKodeJurnalUmum: ShortID()
+        })
         console.log('Selected Keterangan >', this.state.localStateSelectedKeterangan)
         console.log('Selected Rekening Credit >', this.state.localStateSelectedRekeningCredit)
         console.log('Selected Jumlah Credit >', this.state.localStateJumlahRekeningCredit)
         console.log('Selected Rekening Debet >', this.state.localStateSelectedRekeningDebet)
         console.log('Selected Jumlah Debet >', this.state.localStateJumlahRekeningDebet)
+        this.handleHitPOSTFormJurnalUmum()
+    }
+    handleHitPOSTFormJurnalUmum(){
+        // console.log('>>>> ', this.localStateJumlahRekeningCredit)
+        // console.log('>>>> ',this.localStateJumlahRekeningDebet)
+        Request.post({url:'http://localhost:9000/jurnal_umum', 
+        form: {
+                kode_jurnal_umum : this.state.localStateKodeJurnalUmum,
+                id_keterangan: this.state.localStateSelectedKeterangan,
+                id_rekening_debet: this.state.localStateSelectedRekeningDebet,
+                jumlah_debet: this.state.localStateJumlahRekeningDebet,
+                id_rekening_credit: this.state.localStateSelectedRekeningCredit,
+                jumlah_credit: this.state.localStateJumlahRekeningCredit
+            }
+        }, function(err, httpResponse, body){
+            if(err){
+                console.log(err)
+            } else {
+                if(httpResponse.statusCode === 500){
+                    alert('Duplikat Pada Form')
+                    console.log(body)
+                } else{
+                    alert('Berhasil')
+                }
+            }    
+        })
     }
   render() {
     return (
