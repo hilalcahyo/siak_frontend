@@ -2,12 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {
-  actionUpdateListAccount,
-} from '../../../Redux/Reducers/Pages/SIAK/Reducer_SIAK'
+// import {
+//   actionUpdateResultPoisson,
+//   actionUpdateResultCumulativePoisson,
+//   actionUpdateInputForm1,
+//   actionUpdateInputForm2
+// } from '../../../Redux/Reducers/Pages/Reducer_Home'
 import Request from 'request'
-import ReactTable from 'react-table'
-import 'react-table/react-table.css'
 
 
 
@@ -15,61 +16,53 @@ class Home extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            local_state_all_account: []
+            local_state_deskripsi_keterangan : ''
         }
+        this.handleCatchInputDeskripsiKeterangan = this.handleCatchInputDeskripsiKeterangan.bind(this)
+        this.handleCatchSubmitButton = this.handleCatchSubmitButton.bind(this)
         this.handleHitAccount = this.handleHitAccount.bind(this)
     }
     handleHitAccount(){
         console.log('Hit backend')
-        let localThis = this;
-        Request.get(
-            {url:'http://localhost:9000/accounts/table'}, 
-            function(err,httpResponse,body){
-                if(err){
-                    console.log(err)
-                } else {
-                    if(httpResponse.statusCode === 500){
-                        alert('Duplikat Pada Form')
-                    } else{
-                        let currentArrayAllAccount = JSON.parse(body)
-                        currentArrayAllAccount = currentArrayAllAccount.result_json
-                        console.log('berhasil fetch data')
-                        console.log(currentArrayAllAccount)
-                        // this.props.actionUpdateListAccount(currentArrayAllAccount)
-                        localThis.setState({
-                            local_state_all_account: currentArrayAllAccount
-                        })
-                    }
-                }    
+        Request.post({url:'http://localhost:9000/detail', 
+        form: {
+            deskripsi_keterangan: this.state.local_state_deskripsi_keterangan
+            }}, function(err, httpResponse, body){
+            if(err){
+                console.log(err)
+            } else {
+                if(httpResponse.statusCode === 500){
+                    alert('Duplikat Pada Form')
+                } else{
+                    alert('Berhasil')
+                }
+            }    
         })
     }
-    componentDidMount(){
-        this.handleHitAccount()               
+    handleCatchInputDeskripsiKeterangan(event){
+        let currentKeyboard = event.target.value
+        this.setState({
+            local_state_deskripsi_keterangan: currentKeyboard,
+        })
+    }
+    handleCatchSubmitButton(){
+        if( String(this.state.local_state_deskripsi_keterangan) !== ''){
+            this.handleHitAccount()
+        } else {
+            alert('Kedua form tidak boleh kosong')
+        } 
     }
 
     render() {
-        const columns = [
-            {
-                Header: 'Id Rekening',
-                accessor: 'id_rekening' 
-            }, 
-            { 
-                Header: 'Nama Rekening',
-                accessor: 'nama_rekening',
-            },
-            { 
-                Header: 'Kode Rekening',
-                accessor: 'kode_rekening',
-            },
-        ]
-         
         return (
             <div>
-            <h1>List Nomer Rekening</h1>
-            <ReactTable
-                data={this.state.local_state_all_account}
-                columns={columns}
-            />
+            <h1>Formulir Daftar Keterangan</h1>
+            <label>Deskripsi Keterangan</label>
+            <br/>
+            <input type='text' onChange={this.handleCatchInputDeskripsiKeterangan} value={this.state.local_state_deskripsi_keterangan}/>        
+            <br/>
+            <button onClick={this.handleCatchSubmitButton}>Submit </button>
+            <br/>
             <button onClick={this.props.changePageToMain}>Back To Main Page </button>
             </div>
         );
@@ -78,11 +71,9 @@ class Home extends React.Component {
 
 
 const mapStateToProps = state => ({
-    global_state_list_account: state.Reducer_Home.result_poisson,  
 })
   
 const mapDispatchToProps = dispatch => bindActionCreators({
-    actionUpdateListAccount,
     changePageToMain: () => push('/')
   }, dispatch)
   
