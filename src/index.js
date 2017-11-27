@@ -10,10 +10,13 @@ import { Route } from 'react-router'
 
 import SIAK_Main from './Pages/SIAK/Main/SIAK_Main'
 import Form_General_Journal from './Pages/SIAK/Form_General_Journal/index'
-import Form_Account from './Pages/SIAK/Form_Account/index'
-import Form_Detail from './Pages/SIAK/Form_Keterangan/index'
 
+import Form_Account from './Pages/SIAK/Form_Account/index'
 import List_Account from './Pages/SIAK/List_Account/index'
+
+import Form_Detail from './Pages/SIAK/Form_Keterangan/index'
+import List_Detail from './Pages/SIAK/List_Keterangan/index'
+
 
 ReactDOM.render(
   <Provider store={store}>
@@ -24,6 +27,8 @@ ReactDOM.render(
           <Route exact path='/form-account' component={Form_Account}/>
           <Route exact path='/list-account' component={List_Account}/>
           <Route exact path='/form-detail' component={Form_Detail}/>
+          <Route exact path='/list-detail' component={List_Detail}/>
+          
         </div>
       </ConnectedRouter>
     </Provider>, 

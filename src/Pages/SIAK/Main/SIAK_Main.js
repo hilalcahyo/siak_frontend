@@ -12,16 +12,17 @@ class Siak_Main extends React.Component {
         <div>
             <button onClick={this.props.changePageToPageFormGeneralJournal}>Form Tambah Jurnal Umum</button>
             <br/>
-            <button onClick={this.props.changePagetToPageFormAccount}>Form Tambah Akun</button>
-            <br/>            
+            <button onClick={this.handleMoveToFormGeneralJournal}>List Jurnal Umum</button>
+            <br/>  
             <button onClick={this.props.changePagetToPageFormDetail}>Form Tambah Keterangan</button>
             <br/>
-            <button onClick={this.handleMoveToFormGeneralJournal}>List Keterangan</button>
+            <button onClick={this.props.changePageToPageListDetail}>List Keterangan</button>
             <br/>
+            <button onClick={this.props.changePagetToPageFormAccount}>Form Tambah Nomer Rekening</button>
+            <br/>            
             <button onClick={this.props.changePageToPageListAccount}>List Nomer rekening</button>
             <br/>                        
-            <button onClick={this.handleMoveToFormGeneralJournal}>List Jurnal Umum</button>
-            <br/>                        
+                                    
         </div>
     )
   }
@@ -36,7 +37,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     changePageToPageFormGeneralJournal : () => push('/form-general-journal'),
     changePagetToPageFormAccount : () => push('/form-account'),
     changePagetToPageFormDetail : () => push('/form-detail'),
-    changePageToPageListAccount : () => push('/list-account')
+    changePageToPageListAccount : () => push('/list-account'),
+    changePageToPageListDetail : () => push('/list-detail')
   }, dispatch)
   
 export default connect(

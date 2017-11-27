@@ -4,14 +4,8 @@ import 'react-select/dist/react-select.css'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {
-  actionUpdateResultPoisson,
-  actionUpdateResultCumulativePoisson,
-  actionUpdateInputForm1,
-  actionUpdateInputForm2
-} from '../../../Redux/Reducers/Pages/Reducer_Home'
 import Request from 'request'
-
+import ShortID from 'shortid'
 
 
 class Home extends React.Component {
@@ -20,54 +14,55 @@ class Home extends React.Component {
         // this.handleUpdateInputForm1 = this.handleUpdateInputForm1.bind(this)
         // this.handleUpdateInputForm2 = this.handleUpdateInputForm2.bind(this)
         this.state = {
-            localStateOptionsRekening : [   { value: '15c518fb-4bb0-4e91-9b70-b80bdf543cfa', label: 'BCA 2' },
-                                            { value: '7fb5c02b-2ed5-4daa-a731-747bf1cd0062', label: 'Kas'}],
-            localStateOptionKeterangan : [  { value: '883b1178-9e0f-4574-a2e8-4b2d157149d1', label: 'Modal Usaha(Setoran Tunai)' },
-                                            { value: '222ba568-9ef1-4db6-96f6-86109a357ea5', label: 'Beli Peralatan(Komputer,Rak, Kursi, Meja, Printer) Tunai'}],
             localStateSelectedRekeningDebet : '',
+            localStateJumlahRekeningDebet: '',
+
             localStateSelectedRekeningCredit : '',
+            localStateJumlahRekeningCredit: '',            
+            
             localStateSelectedKeterangan : '',
+
+            localStateID: '',
+            
             localStateOptionKeteranganFromBackend: [],
-            localStateOptionsRekeningDebetFromBackend: []           
+            localStateOptionsRekeningFromBackend: []           
         }
-        this.handleCatchOptionDebet = this.handleCatchOptionDebet.bind(this)
-        this.handleCatchOptionCredit = this.handleCatchOptionCredit.bind(this)
         this.handleCatchOptionKeterangan = this.handleCatchOptionKeterangan.bind(this)
         this.handleCatchOptionRekeningDebet = this.handleCatchOptionRekeningDebet.bind(this)
+        this.handleCatchOptionRekeningCredit = this.handleCatchOptionRekeningCredit.bind(this)
+        this.handleInputTotalDebet = this.handleInputTotalDebet.bind(this)
+        this.handleInputTotalCredit = this.handleInputTotalCredit.bind(this)
+        this.handleSubmitButtonFormJournalUmum = this.handleSubmitButtonFormJournalUmum.bind(this)
     }
     componentWillMount(){
-        console.log('>>> Hallo')
         Request('http://127.0.0.1:9000/details', (error, response, body) => {
-            console.log('error:', error); // Print the error if one occurred
-            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-            console.log('body:', body); // Print the HTML for the Google homepage.
-            let tempBody = JSON.parse(body)
-            console.log("tempBody >>", tempBody.result_json)
-            this.setState({
-                localStateOptionKeteranganFromBackend: tempBody.result_json
-            })  
-            console.log(this.state.localStateOptionKeteranganFromBackend)
-        });
-
+            if(error) {
+                alert('Problem When Get Keterangan')
+            } else {
+                if(response.statusCode === 200) {
+                    let tempBody = JSON.parse(body)
+                    this.setState({
+                        localStateOptionKeteranganFromBackend: tempBody.result_json
+                    })
+                } else {
+                    alert('Something When Wrong On DB Server')
+                }
+            }
+        })
         Request('http://127.0.0.1:9000/accounts', (error, response, body) => {
-            console.log('error:', error); // Print the error if one occurred
-            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-            console.log('body:', body); // Print the HTML for the Google homepage.
-            let tempBody = JSON.parse(body)
-            console.log("tempBody >>", tempBody.result_json)
-            this.setState({
-                localStateOptionsRekeningDebetFromBackend: tempBody.result_json
-            })  
-            console.log(this.state.localStateOptionKeteranganFromBackend)
-        });
-    
-
-    }
-    handleCatchOptionDebet(value){
-        console.log("handleCatchOptionDebet >>>", value)
-    }
-    handleCatchOptionCredit(value){
-        console.log("handleCatchOptionCredit >>>", value)
+            if(error) {
+                alert('Problem When Get Nomer Rekening')
+            } else {
+                if(response.statusCode === 200) {
+                    let tempBody = JSON.parse(body)
+                    this.setState({
+                        localStateOptionsRekeningFromBackend: tempBody.result_json
+                    })
+                } else {
+                    alert('Something When Wrong On DB Server')
+                }
+            }
+        })
     }
     handleCatchOptionKeterangan(value){
         this.setState({
@@ -79,34 +74,85 @@ class Home extends React.Component {
             localStateSelectedRekeningDebet: value.value
         })      
     }
-
+    handleCatchOptionRekeningCredit(value){
+        this.setState({
+            localStateSelectedRekeningCredit: value.value
+        })      
+    }
+    handleInputTotalCredit(event){
+        this.setState({
+            localStateJumlahRekeningCredit: event.target.value
+        })
+    }
+    handleInputTotalDebet(event){
+        this.setState({
+            localStateJumlahRekeningDebet: event.target.value
+        })
+    }
+    handleSubmitButtonFormJournalUmum(){
+        console.log(ShortID())
+        console.log('Selected Keterangan >', this.state.localStateSelectedKeterangan)
+        console.log('Selected Rekening Credit >', this.state.localStateSelectedRekeningCredit)
+        console.log('Selected Jumlah Credit >', this.state.localStateJumlahRekeningCredit)
+        console.log('Selected Rekening Debet >', this.state.localStateSelectedRekeningDebet)
+        console.log('Selected Jumlah Debet >', this.state.localStateJumlahRekeningDebet)
+    }
   render() {
     return (
         <div>
-            <h1>Form Genera Journal</h1>
+            <h1>Form General Journal</h1>
             <br/>
             <div>
                 <label>Select Keterangan</label>
                 <br/>                
                 <Select
-                name="form-field-name"
-                value={this.state.localStateSelectedKeterangan}
-                options={this.state.localStateOptionKeteranganFromBackend}
-                onChange={currentValue => this.handleCatchOptionKeterangan(currentValue)}
+                    name="form-field-name"
+                    value={this.state.localStateSelectedKeterangan}
+                    options={this.state.localStateOptionKeteranganFromBackend}
+                    onChange={currentValue => this.handleCatchOptionKeterangan(currentValue)}
+                />
+                <br/>                                
+            </div>
+            <div> 
+                <label>Pilih Rekening Debit</label>                    
+                <br/>
+                <Select
+                    name="form-field-name"
+                    value={this.state.localStateSelectedRekeningDebet}
+                    options={this.state.localStateOptionsRekeningFromBackend}
+                    onChange={currentValue => this.handleCatchOptionRekeningDebet(currentValue)}
+                />
+                <br/>
+            </div>
+            <div>
+                <label>Jumlah Uang Debit</label>
+                <br/>
+                <input type='number' onChange={this.handleInputTotalDebet} value={this.state.localStateJumlahRekeningDebet}/>
+                <br/>
+            </div>
+            <div>
+                <label>Pilih Rekening Kredit</label>
+                <Select
+                    name="form-field-name"
+                    value={this.state.localStateSelectedRekeningCredit}
+                    options={this.state.localStateOptionsRekeningFromBackend}
+                    onChange={currentValue => this.handleCatchOptionRekeningCredit(currentValue)}
                 />
             </div>
             <div>
-                <label>Select Debet</label>
+                <label>Jumlah Uang Kredit</label>
                 <br/>
-                <Select
-                name="form-field-name"
-                value={this.state.localStateSelectedRekeningDebet}
-                options={this.state.localStateOptionsRekeningDebetFromBackend}
-                onChange={currentValue => this.handleCatchOptionRekeningDebet(currentValue)}
-                />
+                <input type='number' onChange={this.handleInputTotalCredit} value={this.localStateJumlahRekeningCredit}/>
+                <br/>
             </div>
-            <br/>
-            <button onClick={this.props.changePageToMain}>Back To Main Page </button>
+            <div>
+                <button onClick={this.handleSubmitButtonFormJournalUmum}>Submit</button>
+            </div>
+            <div>
+                <button onClick={this.props.changePageToMain}>Back To Main Page </button>                                
+            </div>
+            
+    
         </div>
     );
   }
@@ -114,17 +160,9 @@ class Home extends React.Component {
 
 
 const mapStateToProps = state => ({
-    result_poisson: state.Reducer_Home.result_poisson,
-    result_cumulative_poisson: state.Reducer_Home.result_cumulative_poisson,
-    inputForm1: state.Reducer_Home.inputForm1,
-    inputForm2: state.Reducer_Home.inputForm2
 })
   
 const mapDispatchToProps = dispatch => bindActionCreators({
-    actionUpdateResultPoisson,
-    actionUpdateResultCumulativePoisson,
-    actionUpdateInputForm1,
-    actionUpdateInputForm2,
     changePageToMain : () => push('/')
   }, dispatch)
   
