@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-//import Home from './Pages/Home/Home'
-import General_Journal from './Pages/SIAK/General_Journal/index'
+import Siak_Main from './Pages/SIAK/Main/SIAK_Main'
 class App extends Component {
   render() {
     return (
-      // <Home />
-      <General_Journal />
+      <Siak_Main />
     );
   }
 }

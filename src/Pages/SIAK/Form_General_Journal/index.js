@@ -3,6 +3,7 @@ import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { push } from 'react-router-redux'
 import {
   actionUpdateResultPoisson,
   actionUpdateResultCumulativePoisson,
@@ -41,7 +42,6 @@ class Home extends React.Component {
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             console.log('body:', body); // Print the HTML for the Google homepage.
             let tempBody = JSON.parse(body)
-            tempBody.error_json
             console.log("tempBody >>", tempBody.result_json)
             this.setState({
                 localStateOptionKeteranganFromBackend: tempBody.result_json
@@ -54,7 +54,6 @@ class Home extends React.Component {
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             console.log('body:', body); // Print the HTML for the Google homepage.
             let tempBody = JSON.parse(body)
-            tempBody.error_json
             console.log("tempBody >>", tempBody.result_json)
             this.setState({
                 localStateOptionsRekeningDebetFromBackend: tempBody.result_json
@@ -84,7 +83,7 @@ class Home extends React.Component {
   render() {
     return (
         <div>
-            <h1>Home</h1>
+            <h1>Form Genera Journal</h1>
             <br/>
             <div>
                 <label>Select Keterangan</label>
@@ -106,6 +105,8 @@ class Home extends React.Component {
                 onChange={currentValue => this.handleCatchOptionRekeningDebet(currentValue)}
                 />
             </div>
+            <br/>
+            <button onClick={this.props.changePageToMain}>Back To Main Page </button>
         </div>
     );
   }
@@ -123,7 +124,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     actionUpdateResultPoisson,
     actionUpdateResultCumulativePoisson,
     actionUpdateInputForm1,
-    actionUpdateInputForm2
+    actionUpdateInputForm2,
+    changePageToMain : () => push('/')
   }, dispatch)
   
 export default connect(
