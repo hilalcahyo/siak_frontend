@@ -94,30 +94,18 @@ class Home extends React.Component {
         })
     }
     handleSubmitButtonFormJournalUmum(){
-        console.log(ShortID())
-        this.setState({
-            localStateKodeJurnalUmum: ShortID()
-        })
         console.log('Selected Keterangan >', this.state.localStateSelectedKeterangan)
         console.log('Selected Rekening Credit >', this.state.localStateSelectedRekeningCredit)
         console.log('Selected Jumlah Credit >', this.state.localStateJumlahRekeningCredit)
         console.log('Selected Rekening Debet >', this.state.localStateSelectedRekeningDebet)
         console.log('Selected Jumlah Debet >', this.state.localStateJumlahRekeningDebet)
         this.handleHitPOSTFormJurnalUmum()
-        // let tempTotalArray = this.state.localStateArrayOne
-        // Array.prototype.push.apply(tempTotalArray, this.state.localStateArrayTwo)
-        // console.log('TEMP TOTAL ARRAY : ', tempTotalArray)
-        // this.setState({
-        //     localStateArrayThree: (this.state.localStateArrayOne).concat(this.state.localStateArrayTwo)
-        // })
-       
+        
     }
     handleHitPOSTFormJurnalUmum(){
-        // console.log('>>>> ', this.localStateJumlahRekeningCredit)
-        // console.log('>>>> ',this.localStateJumlahRekeningDebet)
         Request.post({url:'http://localhost:9000/jurnal_umum', 
         form: {
-                kode_jurnal_umum : this.state.localStateKodeJurnalUmum,
+                kode_jurnal_umum : ShortID(),
                 id_keterangan: this.state.localStateSelectedKeterangan,
                 id_rekening_debet: this.state.localStateSelectedRekeningDebet,
                 jumlah_debet: this.state.localStateJumlahRekeningDebet,
