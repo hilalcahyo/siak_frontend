@@ -22,6 +22,8 @@ class Siak_Main extends React.Component {
             <br/>            
             <button onClick={this.props.changePageToPageListAccount}>List Nomer rekening</button>
             <br/>                        
+            <button onClick={this.props.changePageToPageListBigBook}>List Buku Besar</button>
+            <br/>                        
                                     
         </div>
     )
@@ -39,7 +41,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     changePagetToPageFormAccount : () => push('/form-account'),
     changePagetToPageFormDetail : () => push('/form-detail'),
     changePageToPageListAccount : () => push('/list-account'),
-    changePageToPageListDetail : () => push('/list-detail')
+    changePageToPageListDetail : () => push('/list-detail'),
+    changePageToPageListBigBook : () => push('/list-big-book')
   }, dispatch)
   
 export default connect(

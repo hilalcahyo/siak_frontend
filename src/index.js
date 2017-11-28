@@ -19,6 +19,8 @@ import List_Account from './Pages/SIAK/List_Account/index'
 import Form_Detail from './Pages/SIAK/Form_Keterangan/index'
 import List_Detail from './Pages/SIAK/List_Keterangan/index'
 
+import List_Big_Book from './Pages/SIAK/List_Big_Book/index'
+
 
 ReactDOM.render(
   <Provider store={store}>
@@ -31,6 +33,8 @@ ReactDOM.render(
           <Route exact path='/list-account' component={List_Account}/>
           <Route exact path='/form-detail' component={Form_Detail}/>
           <Route exact path='/list-detail' component={List_Detail}/>
+          <Route exact path='/list-big-book' component={List_Big_Book}/>
+
           
         </div>
       </ConnectedRouter>
