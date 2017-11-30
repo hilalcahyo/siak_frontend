@@ -15,13 +15,53 @@ class Home extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            local_state_all_details: []
+            local_state_neraca_saldo_kredit: [],
+            local_state_neraca_saldo_debet: [],
+            local_state_show_debet: true
         }
         this.handleHitAccount = this.handleHitAccount.bind(this)
+        this.handleHitNeracaSaldoDebet = this.handleHitNeracaSaldoDebet.bind(this)
+        this.handleHitNeracaSaldoKredit = this.handleHitNeracaSaldoKredit.bind(this)
+        this.handleSwitchView = this.handleSwitchView.bind(this)
     }
     handleHitAccount(){
         console.log('Hit backend')
+        this.handleHitNeracaSaldoDebet()
+        this.handleHitNeracaSaldoKredit()
+    }
+    handleSwitchView(){
+        console.log(this.state.local_state_show_debet)
+        this.setState({
+            local_state_show_debet: !(this.state.local_state_show_debet)
+        })
+    }
+    handleHitNeracaSaldoDebet(){
         let localThis = this;
+        
+        Request.get(
+            {url:'http://localhost:9000/neraca_saldo/debet'}, 
+            function(err, httpResponse, body){
+                if(err){
+                    console.log(err)
+                } else {
+                    if(httpResponse.statusCode === 500){
+                        alert('Duplikat Pada Form')
+                    } else{
+                        let currentArrayAllDetails = JSON.parse(body)
+                        currentArrayAllDetails = currentArrayAllDetails.result_json
+                        console.log('berhasil fetch data')
+                        console.log(currentArrayAllDetails)
+                        // this.props.actionUpdateListAccount(currentArrayAllDetails)
+                        localThis.setState({
+                            local_state_neraca_saldo_debet: currentArrayAllDetails
+                        })
+                    }
+                }    
+        })
+    }
+    handleHitNeracaSaldoKredit(){
+        let localThis = this;
+        
         Request.get(
             {url:'http://localhost:9000/neraca_saldo/kredit'}, 
             function(err, httpResponse, body){
@@ -37,7 +77,7 @@ class Home extends React.Component {
                         console.log(currentArrayAllDetails)
                         // this.props.actionUpdateListAccount(currentArrayAllDetails)
                         localThis.setState({
-                            local_state_all_details: currentArrayAllDetails
+                            local_state_neraca_saldo_kredit: currentArrayAllDetails
                         })
                     }
                 }    
@@ -62,17 +102,34 @@ class Home extends React.Component {
                 accessor: 'total',
             }
         ]
-         
+         const NeracaSaldoDebit= () =>{
+             return(<div>
+                    <h1>Neraca Saldo Debet</h1>
+                    <ReactTable
+                        data={this.state.local_state_neraca_saldo_debet}
+                        columns={columns}
+                    />
+                    </div>)
+         }
+         const NeracaSaldoKredit = () =>{
+            return(<div>
+                    <h1>Neraca Saldo Kredit</h1>
+                    <ReactTable
+                        data={this.state.local_state_neraca_saldo_kredit}
+                        columns={columns}
+                    />
+                    </div>)
+        }
         return (
             <div>
                 <button onClick={this.props.changePageToMain}>Back To Main Page </button>
                 <h1>List Neraca Saldo</h1>
-                <h5>Pada table dibawah ini. akan dibagi Menjadi Kredit dan Debet</h5>
-                <ReactTable
-                    data={this.state.local_state_all_details}
-                    columns={columns}
-                />
-                
+                <h5>This Table Bellow Will Dynamic Change If You Press The Button</h5>
+                <button onClick={this.handleSwitchView}>Switch</button>
+                {
+                    this.state.local_state_show_debet ? <NeracaSaldoDebit />: <NeracaSaldoKredit />
+                }
+                <br/>
             </div>
         );
     }
