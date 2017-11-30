@@ -39,7 +39,7 @@ class Home extends React.Component {
         let localThis = this;
         
         Request.get(
-            {url:'http://localhost:9000/neraca_saldo/debet'}, 
+            {url:'http://168.1.30.172:9000/neraca_saldo/debet'}, 
             function(err, httpResponse, body){
                 if(err){
                     console.log(err)
@@ -63,7 +63,7 @@ class Home extends React.Component {
         let localThis = this;
         
         Request.get(
-            {url:'http://localhost:9000/neraca_saldo/kredit'}, 
+            {url:'http://168.1.30.172:9000/neraca_saldo/kredit'}, 
             function(err, httpResponse, body){
                 if(err){
                     console.log(err)

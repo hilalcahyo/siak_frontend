@@ -24,7 +24,7 @@ class Home extends React.Component {
     }
     handleHitAccount(){
         console.log('Hit backend')
-        Request.post({url:'http://localhost:9000/detail', 
+        Request.post({url:'http://168.1.30.172:9000/detail', 
         form: {
             deskripsi_keterangan: this.state.local_state_deskripsi_keterangan
             }}, function(err, httpResponse, body){

@@ -26,7 +26,7 @@ class Home extends React.Component {
     }
     handleHitAccount(){
         console.log('Hit backend')
-        Request.post({url:'http://localhost:9000/account', 
+        Request.post({url:'http://168.1.30.172:9000/account', 
         form: {
             nama_rekening: this.state.local_state_nama_rekening,
             kode_rekening: this.state.local_state_kode_rekening

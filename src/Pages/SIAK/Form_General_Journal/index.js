@@ -103,7 +103,7 @@ class Home extends React.Component {
         
     }
     handleHitPOSTFormJurnalUmum(){
-        Request.post({url:'http://localhost:9000/jurnal_umum', 
+        Request.post({url:'http://168.1.30.172:9000/jurnal_umum', 
         form: {
                 kode_jurnal_umum : ShortID(),
                 id_keterangan: this.state.localStateSelectedKeterangan,

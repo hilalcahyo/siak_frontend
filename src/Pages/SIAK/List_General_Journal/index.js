@@ -23,7 +23,7 @@ class Home extends React.Component {
         console.log('Hit backend')
         let localThis = this;
         Request.get(
-            {url:'http://localhost:9000/jurnal_umum/table'}, 
+            {url:'http://168.1.30.172:9000/jurnal_umum/table'}, 
             function(err,httpResponse,body){
                 if(err){
                     console.log(err)
