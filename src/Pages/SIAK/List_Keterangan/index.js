@@ -61,12 +61,13 @@ class Home extends React.Component {
          
         return (
             <div>
-            <h1>List Keterangan</h1>
-            <ReactTable
-                data={this.state.local_state_all_details}
-                columns={columns}
-            />
-            <button onClick={this.props.changePageToMain}>Back To Main Page </button>
+                <button onClick={this.props.changePageToMain}>Back To Main Page </button>
+                <h1>List Keterangan</h1>
+                <ReactTable
+                    data={this.state.local_state_all_details}
+                    columns={columns}
+                />
+                
             </div>
         );
     }

@@ -8,22 +8,31 @@ import {
 import Request from 'request'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
-
+import Select from 'react-select'
+import 'react-select/dist/react-select.css'
 
 
 class Home extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            local_state_all_jurnal_umum: []
+            local_state_all_jurnal_umum: [],
+            localStateSelectedRekening : '',
+            localStateOptionsRekeningFromBackend: []
         }
         this.handleHitAccount = this.handleHitAccount.bind(this)
+        this.handleCatchSubmitButton = this.handleCatchSubmitButton.bind(this)
+    }
+    handleCatchSubmitButton(){
+        this.handleHitAccount()  
+        console.log(this.state.localStateSelectedRekening)             
+        
     }
     handleHitAccount(){
         console.log('Hit backend')
         let localThis = this;
         Request.get(
-            {url:'http://localhost:9000/jurnal_umum/table'}, 
+            {url:'http://localhost:9000/jurnal_umum/table/'+this.state.localStateSelectedRekening}, 
             function(err,httpResponse,body){
                 if(err){
                     console.log(err)
@@ -42,8 +51,27 @@ class Home extends React.Component {
                 }    
         })
     }
+    handleCatchOptionRekening(value){
+        this.setState({
+            localStateSelectedRekening: value.value
+        })      
+    }
     componentDidMount(){
-        this.handleHitAccount()               
+        // this.handleHitAccount()               
+        Request('http://127.0.0.1:9000/accounts', (error, response, body) => {
+            if(error) {
+                alert('Problem When Get Nomer Rekening')
+            } else {
+                if(response.statusCode === 200) {
+                    let tempBody = JSON.parse(body)
+                    this.setState({
+                        localStateOptionsRekeningFromBackend: tempBody.result_json
+                    })
+                } else {
+                    alert('Something When Wrong On DB Server')
+                }
+            }
+        })
     }
 
     render() {
@@ -85,6 +113,13 @@ class Home extends React.Component {
         return (
             <div>
             <h1>List Jurnal Umum</h1>
+            <Select
+                    name="form-field-name"
+                    value={this.state.localStateSelectedRekening}
+                    options={this.state.localStateOptionsRekeningFromBackend}
+                    onChange={currentValue => this.handleCatchOptionRekening(currentValue)}
+                />
+            <button onClick={this.handleCatchSubmitButton}>Submit </button>
             <ReactTable
                 data={this.state.local_state_all_jurnal_umum}
                 columns={columns}

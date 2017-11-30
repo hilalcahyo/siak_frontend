@@ -67,6 +67,7 @@ class Home extends React.Component {
     render() {
         return (
             <div>
+            <button onClick={this.props.changePageToMain}>Back To Main Page </button>
             <h1>Formulir Daftar Nomer Rekening</h1>
             <label>Nama Rekening</label>
             <br/>
@@ -78,7 +79,6 @@ class Home extends React.Component {
             <br/>
             <button onClick={this.handleCatchSubmitButton}>Submit </button>
             <br/>
-            <button onClick={this.props.changePageToMain}>Back To Main Page </button>
             </div>
         );
     }
