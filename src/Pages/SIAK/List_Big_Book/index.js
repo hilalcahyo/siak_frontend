@@ -58,7 +58,7 @@ class Home extends React.Component {
     }
     componentDidMount(){
         // this.handleHitAccount()               
-        Request('http://127.0.0.1:9000/accounts', (error, response, body) => {
+        Request('http://168.1.30.172:9000/accounts', (error, response, body) => {
             if(error) {
                 alert('Problem When Get Nomer Rekening')
             } else {
