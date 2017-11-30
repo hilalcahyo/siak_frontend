@@ -103,6 +103,7 @@ class Home extends React.Component {
         
     }
     handleHitPOSTFormJurnalUmum(){
+        if(this.state.localStateJumlahRekeningCredit === this.state.localStateJumlahRekeningDebet){
         Request.post({url:'http://168.1.30.172:9000/jurnal_umum', 
         form: {
                 kode_jurnal_umum : ShortID(),
@@ -124,6 +125,9 @@ class Home extends React.Component {
                 }
             }    
         })
+        } else {
+            alert('Please re-Input Equal Ammount On Credit and Debet Value, Thank You')
+        }
     }
   render() {
     return (
