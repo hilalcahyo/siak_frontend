@@ -10,23 +10,31 @@ class Siak_Main extends React.Component {
   render() {
     return (
         <div>
-            <button onClick={this.props.changePageToPageFormGeneralJournal}>Form Tambah Jurnal Umum</button>
+            <button onClick={this.props.changePageToPageFormGeneralJournal}>Form Add General Journal</button>
             <br/>
-            <button onClick={this.props.changePageToPageListGeneralJournal}>List Jurnal Umum</button>
+            <button onClick={this.props.changePageToPageListGeneralJournal}>List General Journal</button>
             <br/>  
-            <button onClick={this.props.changePagetToPageFormDetail}>Form Tambah Keterangan</button>
+            <button onClick={this.props.changePagetToPageFormDetail}>Form Add Keterangan</button>
             <br/>
-            <button onClick={this.props.changePageToPageListDetail}>List Keterangan</button>
+            <button onClick={this.props.changePageToPageListDetail}>List Details</button>
             <br/>
-            <button onClick={this.props.changePagetToPageFormAccount}>Form Tambah Nomer Rekening</button>
+            <button onClick={this.props.changePagetToPageFormAccount}>Form Add Account Number</button>
             <br/>            
-            <button onClick={this.props.changePageToPageListAccount}>List Nomer rekening</button>
+            <button onClick={this.props.changePageToPageListAccount}>List Account Number</button>
             <br/>                        
-            <button onClick={this.props.changePageToPageListBigBook}>Buku Besar</button>
+            <button onClick={this.props.changePageToPageListBigBook}>Big Book</button>
             <br/>
             <button onClick={this.props.changePageToPageListNeracaSaldo}>Neraca Saldo</button>
-            <br/>                        
-                                    
+            <br/><br/>
+            <br/><br/>
+            <br/><br/>
+            <h3>Team Creator SIAK Web</h3>
+            <p>53416303 hilal cahyo</p><br/>                        
+            <p>54416987 muhammad lutfhi ardi</p><br/>                        
+            <p>57416477 ullya nada</p><br/>                        
+            <p>54416188 muhammad uwais t m</p><br/>                        
+
+                                  
         </div>
     )
   }

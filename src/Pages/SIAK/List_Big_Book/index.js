@@ -115,8 +115,8 @@ class Home extends React.Component {
             <div>
                 <button onClick={this.props.changePageToMain}>Back To Main Page </button>                                
             </div>
-            <h1>Buku Besar</h1><br/><br/><br/><br/>
-            <label>Silahkan Pilih Rekening</label><br/>
+            <h1>Big Book</h1><br/><br/><br/><br/>
+            <label>Please Choose Your Account Number</label><br/>
             <Select
                     name="form-field-name"
                     value={this.state.localStateSelectedRekening}
