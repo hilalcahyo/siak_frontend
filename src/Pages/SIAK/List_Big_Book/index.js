@@ -112,7 +112,11 @@ class Home extends React.Component {
          
         return (
             <div>
-            <h1>List Jurnal Umum</h1>
+            <div>
+                <button onClick={this.props.changePageToMain}>Back To Main Page </button>                                
+            </div>
+            <h1>Buku Besar</h1><br/><br/><br/><br/>
+            <label>Silahkan Pilih Rekening</label><br/>
             <Select
                     name="form-field-name"
                     value={this.state.localStateSelectedRekening}
@@ -120,11 +124,13 @@ class Home extends React.Component {
                     onChange={currentValue => this.handleCatchOptionRekening(currentValue)}
                 />
             <button onClick={this.handleCatchSubmitButton}>Submit </button>
+            <br/>
+            <br/>
+            <br/>
             <ReactTable
                 data={this.state.local_state_all_jurnal_umum}
                 columns={columns}
             />
-            <button onClick={this.props.changePageToMain}>Back To Main Page </button>
             </div>
         );
     }

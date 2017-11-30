@@ -21,6 +21,8 @@ import List_Detail from './Pages/SIAK/List_Keterangan/index'
 
 import List_Big_Book from './Pages/SIAK/List_Big_Book/index'
 
+import List_Neraca_Saldo from './Pages/SIAK/List_Neraca_Saldo/index'
+
 
 ReactDOM.render(
   <Provider store={store}>
@@ -34,6 +36,7 @@ ReactDOM.render(
           <Route exact path='/form-detail' component={Form_Detail}/>
           <Route exact path='/list-detail' component={List_Detail}/>
           <Route exact path='/list-big-book' component={List_Big_Book}/>
+          <Route exact path='/list-neraca-saldo' component={List_Neraca_Saldo} />
 
           
         </div>

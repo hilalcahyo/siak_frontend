@@ -128,6 +128,9 @@ class Home extends React.Component {
   render() {
     return (
         <div>
+            <div>
+                <button onClick={this.props.changePageToMain}>Back To Main Page </button>                                
+            </div>
             <h1>Form General Journal</h1>
             <br/>
             <div>
@@ -176,9 +179,7 @@ class Home extends React.Component {
             <div>
                 <button onClick={this.handleSubmitButtonFormJournalUmum}>Submit</button>
             </div>
-            <div>
-                <button onClick={this.props.changePageToMain}>Back To Main Page </button>                                
-            </div>
+
             
     
         </div>

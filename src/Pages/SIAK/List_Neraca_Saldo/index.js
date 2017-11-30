@@ -15,7 +15,7 @@ class Home extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            local_state_all_account: []
+            local_state_all_details: []
         }
         this.handleHitAccount = this.handleHitAccount.bind(this)
     }
@@ -23,21 +23,21 @@ class Home extends React.Component {
         console.log('Hit backend')
         let localThis = this;
         Request.get(
-            {url:'http://localhost:9000/accounts/table'}, 
-            function(err,httpResponse,body){
+            {url:'http://localhost:9000/neraca_saldo/kredit'}, 
+            function(err, httpResponse, body){
                 if(err){
                     console.log(err)
                 } else {
                     if(httpResponse.statusCode === 500){
                         alert('Duplikat Pada Form')
                     } else{
-                        let currentArrayAllAccount = JSON.parse(body)
-                        currentArrayAllAccount = currentArrayAllAccount.result_json
+                        let currentArrayAllDetails = JSON.parse(body)
+                        currentArrayAllDetails = currentArrayAllDetails.result_json
                         console.log('berhasil fetch data')
-                        console.log(currentArrayAllAccount)
-                        // this.props.actionUpdateListAccount(currentArrayAllAccount)
+                        console.log(currentArrayAllDetails)
+                        // this.props.actionUpdateListAccount(currentArrayAllDetails)
                         localThis.setState({
-                            local_state_all_account: currentArrayAllAccount
+                            local_state_all_details: currentArrayAllDetails
                         })
                     }
                 }    
@@ -50,29 +50,29 @@ class Home extends React.Component {
     render() {
         const columns = [
             {
-                Header: 'Id Rekening',
-                accessor: 'id_rekening' 
+                Header: 'Nama Rekening',
+                accessor: 'nama_rekening' 
+            }, 
+            {
+                Header: 'Kode Rekening',
+                accessor: 'kode_rekening' 
             }, 
             { 
-                Header: 'Nama Rekening',
-                accessor: 'nama_rekening',
-            },
-            { 
-                Header: 'Kode Rekening',
-                accessor: 'kode_rekening',
-            },
+                Header: 'Total',
+                accessor: 'total',
+            }
         ]
          
         return (
             <div>
-            <div>
-                <button onClick={this.props.changePageToMain}>Back To Main Page </button>                                
-            </div>
-            <h1>List Nomer Rekening</h1>
-            <ReactTable
-                data={this.state.local_state_all_account}
-                columns={columns}
-            />
+                <button onClick={this.props.changePageToMain}>Back To Main Page </button>
+                <h1>List Neraca Saldo</h1>
+                <h5>Pada table dibawah ini. akan dibagi Menjadi Kredit dan Debet</h5>
+                <ReactTable
+                    data={this.state.local_state_all_details}
+                    columns={columns}
+                />
+                
             </div>
         );
     }

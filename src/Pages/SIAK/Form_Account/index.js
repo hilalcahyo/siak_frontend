@@ -67,7 +67,9 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-            <button onClick={this.props.changePageToMain}>Back To Main Page </button>
+            <div>
+                <button onClick={this.props.changePageToMain}>Back To Main Page </button>                                
+            </div>
             <h1>Formulir Daftar Nomer Rekening</h1>
             <label>Nama Rekening</label>
             <br/>

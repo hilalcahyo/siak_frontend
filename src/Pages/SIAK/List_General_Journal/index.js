@@ -84,12 +84,14 @@ class Home extends React.Component {
          
         return (
             <div>
+            <div>
+                <button onClick={this.props.changePageToMain}>Back To Main Page </button>                                
+            </div>
             <h1>List Jurnal Umum</h1>
             <ReactTable
                 data={this.state.local_state_all_jurnal_umum}
                 columns={columns}
             />
-            <button onClick={this.props.changePageToMain}>Back To Main Page </button>
             </div>
         );
     }
