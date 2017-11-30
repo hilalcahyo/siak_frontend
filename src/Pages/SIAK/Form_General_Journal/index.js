@@ -39,7 +39,7 @@ class Home extends React.Component {
         this.handleHitPOSTFormJurnalUmum = this.handleHitPOSTFormJurnalUmum.bind(this)
     }
     componentWillMount(){
-        Request('http://127.0.0.1:9000/details', (error, response, body) => {
+        Request('http://168.1.30.172:9000/details', (error, response, body) => {
             if(error) {
                 alert('Problem When Get Keterangan')
             } else {
@@ -53,7 +53,7 @@ class Home extends React.Component {
                 }
             }
         })
-        Request('http://127.0.0.1:9000/accounts', (error, response, body) => {
+        Request('http://168.1.30.172:9000/accounts', (error, response, body) => {
             if(error) {
                 alert('Problem When Get Nomer Rekening')
             } else {
