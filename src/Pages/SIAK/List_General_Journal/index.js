@@ -49,10 +49,14 @@ class Home extends React.Component {
     render() {
         const columns = [
             {
+                Header: 'Tanggal Transaksi',
+                accessor: 'updated_at' 
+            }, 
+            {
                 Header: 'Id Jurnal Umum',
                 accessor: 'kode_jurnal_umum' 
             }, 
-            { 
+            {   
                 Header: 'Keterangan',
                 accessor: 'deskripsi_keterangan',
             },
